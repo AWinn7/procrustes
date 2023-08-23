@@ -2,21 +2,24 @@
 clear vars;
 close all;
 path(pathdef);
-addpath(path,genpath([pwd '/utils/']));
+addpath(path,genpath([pwd '/../utils/']));
 
 %%% setup paths
 base_path = [pwd '/'];
-data_path = '../DATA/HDM/';
-meshes_path = [data_path 'meshes/'];
-samples_path = [base_path 'samples/HDM/'];
+data_path = '../../data/samples/nakwai_50/';
+meshes_path = [data_path 'nakwai_50_offs_all/'];
+samples_path = [data_path 'nakwai_50_mats/'];
 cluster_path = [base_path 'cluster/'];
 scripts_path = [cluster_path 'scripts/'];
 errors_path = [cluster_path 'errors/'];
 outputs_path = [cluster_path 'outputs/'];
 
+disp(base_path);
+disp(scripts_path);
+
 %%% build folders if they don't exist
 touch(samples_path);
-touch(scripts_path);
+%touch(scripts_path);
 touch(errors_path);
 touch(outputs_path);
 
@@ -27,15 +30,15 @@ command_text = ['!rm -f ' outputs_path '*']; eval(command_text); disp(command_te
 command_text = ['!rm -f ' samples_path '*']; eval(command_text); disp(command_text);
 
 %%% load taxa codes
-load('../data/workspaces/HDM_Workspace.mat', 'taxa_code');
+load('../../data/workspaces/HDM_Workspace.mat', 'taxa_code');
 GroupSize = length(taxa_code);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-disp('++++++++++++++++++++++++++++++++++++++++++++++++++');
-disp(['Submitting jobs for sampling mesh files in' meshes_path '...' ]);
+%disp('++++++++++++++++++++++++++++++++++++++++++++++++++');
+%disp(['Submitting jobs for sampling mesh files in' meshes_path '...' ]);
 
-for k = 1:GroupSize
+for k = 1%:GroupSize
     job_id = k;
     
     if (exist([samples_path taxa_code{k} '.mat'], 'file'))
@@ -53,19 +56,23 @@ for k = 1:GroupSize
     fprintf(fid, '#$ -S /bin/bash\n');
     script_text = ['matlab -nodesktop -nodisplay -nojvm -nosplash -r ' ...
         ' "cd ' base_path '; ' ...
-        'path(genpath(''' base_path 'utils/''), path); ' ...
+        'path(genpath(''' base_path '../utils/''), path); ' ...
         'flatten_ongrid ' ...
         mesh_file ' ' ...
         sample_file '; exit; "'];
     % system(script_text); %% grid fails on certain tasks
     fprintf(fid, '%s',script_text);
     fclose(fid);
-    
+   
+    system(['chmod u+x ' script_name]); 
     %%% qsub
     jobname = ['TCjob_' num2str(job_id)];
     serr = [errors_path 'e_job_' num2str(job_id)];
     sout = [outputs_path 'o_job_' num2str(job_id)];
-    tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' script_name ];
-    eval(tosub);
+    system(script_name);
+    %tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' script_name ];
+    %tosub = ['!myqsub3 ' script_name];
+    %disp(tosub);
+    %eval(tosub);
     
 end
