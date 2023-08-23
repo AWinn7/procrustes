@@ -27,9 +27,7 @@ command_text = ['!rm -f ' outputs_path '*']; eval(command_text); disp(command_te
 command_text = ['!rm -f ' samples_path '*']; eval(command_text); disp(command_text);
 
 %%% load taxa codes
-taxa_file = [data_path 'hdm_taxa_table.mat'];
-taxa_code = load(taxa_file);
-taxa_code = taxa_code.taxa_code;
+load('../data/workspaces/HDM_Workspace.mat', 'taxa_code');
 GroupSize = length(taxa_code);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
