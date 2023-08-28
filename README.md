@@ -1,3 +1,18 @@
+## This begins Alex's Readme ##
+
+
+
+
+
+
+
+
+
+
+## This ends Alex's Readme ##
+
+-------------------------------------
+
 ## DEMO SCRIPTS ##
 1. "cPDemoPNAS.m" demonstrates the Continuous Procrustes Analysis algorithm on the PNAS lemur teeth data set.
 2. "cPMSTDemoTeeth.m" demonstrates some spanning-tree-based improvements of the Continuous Procrustes Analysis algorithm on the PNAS lemur teeth data set.
