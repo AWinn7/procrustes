@@ -6,9 +6,9 @@ addpath(path,genpath([pwd '/../utils/']));
 
 %%% setup paths
 base_path = [pwd '/'];
-data_path = '../../data/samples/nakwai_50/';
-meshes_path = [data_path 'nakwai_50_offs_all/'];
-samples_path = [data_path 'nakwai_50_mats/'];
+data_path = '../../data/';
+meshes_path = [data_path 'samples/nakwai_50/nakwai_50_offs_all/'];
+samples_path = [data_path 'results/'];
 cluster_path = [base_path 'cluster/'];
 scripts_path = [cluster_path 'scripts/'];
 errors_path = [cluster_path 'errors/'];
