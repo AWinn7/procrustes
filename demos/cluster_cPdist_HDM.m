@@ -1,42 +1,50 @@
+% cluster_cPdist_HDM
+
 %%% preparation
 clear vars;
 close all;
 path(pathdef);
-addpath(path,genpath([pwd '/utils/']));
+wd = '/home/ugrad/acw23/projects/tac/procrustes/demos';
+
+utils_path = [wd '/../utils/'];
+disp(utils_path);
+addpath(path,genpath(utils_path));
+
+addpath(path,genpath([wd '/../utils/utils_cluster/']));
+
 
 %%% setup paths
-base_path = [pwd '/'];
-data_path = '../DATA/HDM/';
-rslts_path = [base_path 'rslts/'];
+base_path = [wd '/'];
+data_path = [base_path '../../data/'];
+rslts_path = [data_path 'results/rslts/'];
 cluster_path = [base_path 'cluster/'];
-samples_path = [base_path 'samples/HDM/'];
-meshes_path = [data_path 'meshes/'];
+samples_path = [data_path 'results/clusterFlattenHDM_results/'];
+meshes_path = [data_path 'samples/nakwai_50/nakwai_50_offs_all/'];
 scripts_path = [cluster_path 'scripts/'];
 errors_path = [cluster_path 'errors/'];
 outputs_path = [cluster_path 'outputs/'];
 
 %%% build folders if they don't exist
-touch(scripts_path);
-touch(errors_path);
-touch(outputs_path);
-touch(rslts_path);
+%touch(scripts_path);
+%touch(errors_path);
+%touch(outputs_path);
+%touch(rslts_path);
 
 %%% clean up paths
-command_text = ['!rm -f ' scripts_path '*']; eval(command_text); disp(command_text);
-command_text = ['!rm -f ' errors_path '*']; eval(command_text); disp(command_text);
-command_text = ['!rm -f ' outputs_path '*']; eval(command_text); disp(command_text);
-command_text = ['!rm -f ' rslts_path '*']; eval(command_text); disp(command_text);
+%command_text = ['!rm -f ' scripts_path '*']; eval(command_text); disp(command_text);
+%command_text = ['!rm -f ' errors_path '*']; eval(command_text); disp(command_text);
+%command_text = ['!rm -f ' outputs_path '*']; eval(command_text); disp(command_text);
+%command_text = ['!rm -f ' rslts_path '*']; eval(command_text); disp(command_text);
 
 %%% load taxa codes
-taxa_file = [data_path 'hdm_taxa_table.mat'];
-taxa_code = load(taxa_file);
-taxa_code = taxa_code.taxa_code;
+taxaFile=[data_path 'workspaces/HDM_Workspace.mat'];
+load(taxaFile, 'taxa_code');
 GroupSize = length(taxa_code);
 chunk_size = 25; %% Clement
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-disp('++++++++++++++++++++++++++++++++++++++++++++++++++');
+%disp('++++++++++++++++++++++++++++++++++++++++++++++++++');
 disp(['Submitting jobs for comparing sample files in' samples_path '...' ]);
 
 cnt = 0;
@@ -48,14 +56,18 @@ for k1=1:GroupSize
                 %%% close the script file (except the last one, see below)
                 fprintf(fid, '%s ', 'exit; "\n');
                 fclose(fid);
-                
+                %system(['chmod u+x ' script_name]);
                 %%% qsub
                 jobname = ['TCjob_' num2str(job_id)];
                 serr = [errors_path 'e_job_' num2str(job_id)];
                 sout = [outputs_path 'o_job_' num2str(job_id)];
-                tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' ...
-                         script_name ];
-                eval(tosub);
+		%message = ['k1:' num2str(k1) ' k2:' num2str(k2) script_name];
+		%disp(message);
+                %system(script_name);
+		system(['chmod u+x ' script_name]);
+		%tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' ...
+                        % script_name ];
+                %eval(tosub);
             end
             
             job_id = job_id+1;
@@ -67,7 +79,7 @@ for k1=1:GroupSize
             fprintf(fid, '#$ -S /bin/bash\n');
             script_text = ['matlab -nodesktop -nodisplay -nojvm -nosplash -r '...
                 '" cd ' base_path '; ' ...
-                'path(genpath(''' base_path 'utils/''), path);'];
+                'path(genpath(''' base_path '../utils/''), path);'];
             fprintf(fid, '%s ',script_text);
             
             %%% create new matrix
@@ -96,11 +108,16 @@ end
 %%% close the last script file
 fprintf(fid, '%s ', 'exit; "\n');
 fclose(fid);
+system(['chmod u+x ' script_name]);
 %%% qsub last script file
 jobname = ['TCjob_' num2str(job_id)];
 serr = [errors_path 'e_job_' num2str(job_id)];
 sout = [outputs_path 'o_job_' num2str(job_id)];
-tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' script_name ];
-eval(tosub);
-% end
+
+disp(script_name);
+%system(script_name);
+
+%tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' script_name ];
+%eval(tosub);
+
 

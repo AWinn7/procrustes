@@ -1,12 +1,17 @@
+%cluster_flatten_HDM
+
 %%% preparation
 clear vars;
 close all;
 path(pathdef);
-addpath(path,genpath([pwd '/../utils/']));
+
+wd = '/home/ugrad/acw23/projects/tac/procrustes/demos';
+addpath(path,genpath([wd '/../utils/']));
 
 %%% setup paths
-base_path = [pwd '/'];
-data_path = '../../data/';
+base_path = [wd '/'];
+disp(base_path);
+data_path = [base_path '../../data/'];
 meshes_path = [data_path 'samples/nakwai_50/nakwai_50_offs_all/'];
 samples_path = [data_path 'results/'];
 cluster_path = [base_path 'cluster/'];
@@ -18,10 +23,10 @@ disp(base_path);
 disp(scripts_path);
 
 %%% build folders if they don't exist
-touch(samples_path);
+%touch(samples_path);
 %touch(scripts_path);
-touch(errors_path);
-touch(outputs_path);
+%touch(errors_path);
+%touch(outputs_path);
 
 %%% clean up paths
 command_text = ['!rm -f ' scripts_path '*']; eval(command_text); disp(command_text);
@@ -30,7 +35,8 @@ command_text = ['!rm -f ' outputs_path '*']; eval(command_text); disp(command_te
 command_text = ['!rm -f ' samples_path '*']; eval(command_text); disp(command_text);
 
 %%% load taxa codes
-load('../../data/workspaces/HDM_Workspace.mat', 'taxa_code');
+taxaFile=[data_path 'workspaces/HDM_Workspace.mat'];
+load(taxaFile, 'taxa_code');
 GroupSize = length(taxa_code);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
