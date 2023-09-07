@@ -65,6 +65,9 @@ for k1=1:GroupSize
 		%disp(message);
                 %system(script_name);
 		system(['chmod u+x ' script_name]);
+		% -------------------------------------
+		system(script_name)
+		% -------------------------------------
 		%tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' ...
                         % script_name ];
                 %eval(tosub);
@@ -115,7 +118,7 @@ serr = [errors_path 'e_job_' num2str(job_id)];
 sout = [outputs_path 'o_job_' num2str(job_id)];
 
 disp(script_name);
-%system(script_name);
+system(script_name);
 
 %tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' script_name ];
 %eval(tosub);
