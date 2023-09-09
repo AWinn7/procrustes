@@ -2,13 +2,22 @@
 clear all;
 close all;
 path(pathdef);
-addpath(path,genpath([pwd '/utils/']));
+addpath(path,genpath([pwd '/../utils/']));
 
 %%% setup paths
-base_path = [pwd '/'];
-data_path = '../DATA/PNAS/';
+wd = pwd;
+utils_path = [wd '/../utils/'];
+addpath(path,genpath(utils_path));
+addpath(path,genpath([wd '/../utils/utils_cluster/']));
+
+% data_path = '../DATA/PNAS/';
+data_path = [wd '/../../data/'];
 % result_path = '/xtmp/ArchivedResults/Clement/cPdist/'; 
-result_path = '~/Work/cPdist/'; 
+% result_path = '~/Work/cPdist/'; 
+% rslts_path = [result_path 'rslts/'];
+% TextureCoords1Matrix_path = [result_path 'TextureCoords1/'];
+% TextureCoords2Matrix_path = [result_path 'TextureCoords2/'];
+result_path = [data_path 'results/'];
 rslts_path = [result_path 'rslts/'];
 TextureCoords1Matrix_path = [result_path 'TextureCoords1/'];
 TextureCoords2Matrix_path = [result_path 'TextureCoords2/'];
@@ -24,13 +33,18 @@ eval(command_text); disp(command_text);
 command_text = ['!rm -f ' TextureCoords2Matrix_path '*'];
 eval(command_text); disp(command_text);
 
-%%% load taxa codes
-taxa_file = [data_path 'teeth_taxa_table.mat'];
-taxa_code = load(taxa_file);
-taxa_code = taxa_code.taxa_code;
-GroupSize = length(taxa_code);
-chunk_size = 55; %% PNAS
+% %%% load taxa codes
+% taxa_file = [data_path 'teeth_taxa_table.mat'];
+% taxa_code = load(taxa_file);
+% taxa_code = taxa_code.taxa_code;
+% GroupSize = length(taxa_code);
+% chunk_size = 55; %% PNAS
 % chunk_size = 20; %% Clement
+taxaFile=[data_path 'workspaces/HDM_Workspace.mat'];
+load(taxaFile, 'taxa_code');
+GroupSize = length(taxa_code);
+chunk_size = 25;
+
 
 %%% read rslt matrices and separate distance and landmarkMSE's
 cPDistMatrix = zeros(GroupSize,GroupSize);
