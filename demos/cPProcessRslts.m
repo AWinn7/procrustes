@@ -66,7 +66,7 @@ for k1=1:GroupSize
         cPDistMatrix(k1,k2) = cPrslt{k1,k2}.cPdist;
         cPMapsMatrix{k1,k2} = cPrslt{k1,k2}.cPmap;
         invcPMapsMatrix{k1,k2} = cPrslt{k1,k2}.invcPmap;
-        cPlmkMSEMatrix(k1,k2) = cPrslt{k1,k2}.lkMSE;
+%         cPlmkMSEMatrix(k1,k2) = cPrslt{k1,k2}.lkMSE;
         tmpTextureCoords1Matrix{k1,k2} = cPrslt{k1,k2}.TextureCoords1;
         tmpTextureCoords2Matrix{k1,k2} = cPrslt{k1,k2}.TextureCoords2;
         
