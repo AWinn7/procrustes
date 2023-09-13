@@ -1,6 +1,6 @@
 ## This begins Alex's Readme ##
 
-
+- all of the 'lkMSE' stuff has to do with landmarks - that's what 'lk' stands for
 
 
 

@@ -10,10 +10,10 @@ addpath(path,genpath([wd '/../utils/']));
 
 %%% setup paths
 base_path = [wd '/'];
-disp(base_path);
+%disp(base_path);
 data_path = [base_path '../../data/'];
-meshes_path = [data_path 'samples/nakwai_50/nakwai_50_offs_all/'];
-samples_path = [data_path 'results/'];
+meshes_path = [data_path 'samples/subsample/nakwai_50_subsample_offs/ss_mesh_2_offs/'];
+samples_path = [data_path 'results/subsample_cF_HDM_results/'];
 cluster_path = [base_path 'cluster/'];
 scripts_path = [cluster_path 'scripts/'];
 errors_path = [cluster_path 'errors/'];
@@ -41,10 +41,10 @@ GroupSize = length(taxa_code);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%disp('++++++++++++++++++++++++++++++++++++++++++++++++++');
-%disp(['Submitting jobs for sampling mesh files in' meshes_path '...' ]);
+disp('++++++++++++++++++++++++++++++++++++++++++++++++++');
+disp(['Submitting jobs for sampling mesh files in' meshes_path '...' ]);
 
-for k = 1%:GroupSize
+for k = 1:GroupSize
     job_id = k;
     
     if (exist([samples_path taxa_code{k} '.mat'], 'file'))
