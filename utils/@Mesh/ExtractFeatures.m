@@ -5,13 +5,25 @@ function [Cgauss,Cmean,Cmin,Cmax] = ExtractFeatures(GM,options)
 if nargin < 2
     options = struct();
 end
+
 SmoothCurvatureFields = getoptions(options,'SmoothCurvatureFields',3);
-ConfMaxLocalWidth = getoptions(options,'ConfMaxLocalWidth',8);
-GaussMaxLocalWidth = getoptions(options,'GaussMaxLocalWidth',10);
-GaussMinLocalWidth = getoptions(options,'GaussMinLocalWidth',6);
-ADMaxLocalWidth = getoptions(options,'ADMaxLocalWidth',7);
+% ConfMaxLocalWidth = getoptions(options,'ConfMaxLocalWidth',8);
+% GaussMaxLocalWidth = getoptions(options,'GaussMaxLocalWidth',10);
+% GaussMinLocalWidth = getoptions(options,'GaussMinLocalWidth',6);
+% ADMaxLocalWidth = getoptions(options,'ADMaxLocalWidth',7);
+% -------------------------------------
+
+
+ConfMaxLocalWidth = getoptions(options,'ConfMaxLocalWidth',4);
+GaussMaxLocalWidth = getoptions(options,'GaussMaxLocalWidth',5);
+GaussMinLocalWidth = getoptions(options,'GaussMinLocalWidth',3);
+ADMaxLocalWidth = getoptions(options,'ADMaxLocalWidth',5);
 ExcludeBoundary = getoptions(options,'ExcludeBoundary',1);
+
+
 Display = getoptions(options,'Display','off');
+
+
 
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 % extract features (local maximum of conformal factors)
