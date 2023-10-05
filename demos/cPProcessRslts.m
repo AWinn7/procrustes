@@ -2,41 +2,46 @@
 clear all;
 close all;
 path(pathdef);
-addpath(path,genpath([pwd '/utils/']));
+wd = '/home/ugrad/acw23/projects/tac/procrustes/demos';
+utils_path = [wd '/../utils/'];
+disp(utils_path);
+addpath(path,genpath(utils_path));
+addpath(path,genpath([wd '/../utils/utils_cluster/']));
 
 %%% setup paths
-base_path = [pwd '/'];
-data_path = '../DATA/PNAS/';
+base_path = [wd '/'];
+data_path = [base_path '../../data/'];
 % result_path = '/xtmp/ArchivedResults/Clement/cPdist/'; 
-result_path = '~/Work/cPdist/'; 
-rslts_path = [result_path 'rslts/'];
+result_path = [data_path 'results/cpp_results/']; 
+rslts_path = [result_path '../rslts/'];
 TextureCoords1Matrix_path = [result_path 'TextureCoords1/'];
 TextureCoords2Matrix_path = [result_path 'TextureCoords2/'];
 
 %%% check if texture paths exist
-touch(result_path);
-touch(TextureCoords1Matrix_path);
-touch(TextureCoords2Matrix_path);
+command=['touch ', result_path];system(command);
+%touch(result_path);
+command=['touch ', TextureCoords1Matrix_path];system(command);
+%touch(TextureCoords1Matrix_path);
+command=['touch ', TextureCoords2Matrix_path];system(command);
+%touch(TextureCoords2Matrix_path);
 
 %%% clean up texture coordinates matrices
-command_text = ['!rm -f ' TextureCoords1Matrix_path '*'];
-eval(command_text); disp(command_text);
-command_text = ['!rm -f ' TextureCoords2Matrix_path '*'];
-eval(command_text); disp(command_text);
+%command_text = ['!rm -f ' TextureCoords1Matrix_path '*'];
+%system(command_text); disp(command_text);
+%command_text = ['!rm -f ' TextureCoords2Matrix_path '*'];
+%system(command_text); disp(command_text);
 
 %%% load taxa codes
-taxa_file = [data_path 'teeth_taxa_table.mat'];
-taxa_code = load(taxa_file);
-taxa_code = taxa_code.taxa_code;
+taxaFile=[data_path 'workspaces/HDM_Workspace.mat'];
+load(taxaFile, 'taxa_code');
 GroupSize = length(taxa_code);
-chunk_size = 55; %% PNAS
-% chunk_size = 20; %% Clement
+chunk_size = 25;
 
 %%% read rslt matrices and separate distance and landmarkMSE's
 cPDistMatrix = zeros(GroupSize,GroupSize);
 cPMapsMatrix = cell(GroupSize,GroupSize);
 invcPMapsMatrix = cell(GroupSize,GroupSize);
-cPlmkMSEMatrix = zeros(GroupSize,GroupSize);
+%cPlmkMSEMatrix = zeros(GroupSize,GroupSize);
 tmpTextureCoords1Matrix = cell(GroupSize,GroupSize);
 tmpTextureCoords2Matrix = cell(GroupSize,GroupSize);
 
@@ -52,7 +57,7 @@ for k1=1:GroupSize
         cPDistMatrix(k1,k2) = cPrslt{k1,k2}.cPdist;
         cPMapsMatrix{k1,k2} = cPrslt{k1,k2}.cPmap;
         invcPMapsMatrix{k1,k2} = cPrslt{k1,k2}.invcPmap;
-        cPlmkMSEMatrix(k1,k2) = cPrslt{k1,k2}.lkMSE;
+        %cPlmkMSEMatrix(k1,k2) = cPrslt{k1,k2}.lkMSE;
         tmpTextureCoords1Matrix{k1,k2} = cPrslt{k1,k2}.TextureCoords1;
         tmpTextureCoords2Matrix{k1,k2} = cPrslt{k1,k2}.TextureCoords2;
         
@@ -77,12 +82,12 @@ for j=1:GroupSize
             TextureCoords2Matrix = cell(GroupSize,GroupSize);
         end
         if cPDistMatrix(j,k)<cPDistMatrix(k,j)
-            cPlmkMSEMatrix(k,j) = cPlmkMSEMatrix(j,k);
+            %cPlmkMSEMatrix(k,j) = cPlmkMSEMatrix(j,k);
             cPMapsMatrix{k,j} = invcPMapsMatrix{j,k};
             TextureCoords1Matrix{j,k} = tmpTextureCoords1Matrix{j,k};
             TextureCoords2Matrix{j,k} = tmpTextureCoords2Matrix{j,k};
         else
-            cPlmkMSEMatrix(j,k) = cPlmkMSEMatrix(k,j);
+            %cPlmkMSEMatrix(j,k) = cPlmkMSEMatrix(k,j);
             cPMapsMatrix{j,k} = invcPMapsMatrix{k,j};
             TextureCoords1Matrix{j,k} = tmpTextureCoords2Matrix{k,j};
             TextureCoords2Matrix{j,k} = tmpTextureCoords1Matrix{k,j};
@@ -98,18 +103,18 @@ clear TextureCoords1Matrix TextureCoords2Matrix
 cPDistMatrix = min(cPDistMatrix,cPDistMatrix');
 
 %%% visualize distance and landmarkMSE matrices
-figure;
-imagesc(cPDistMatrix./max(cPDistMatrix(:))*64);
-axis equal;
-axis([1,GroupSize,1,GroupSize]);
+%figure;
+%imagesc(cPDistMatrix./max(cPDistMatrix(:))*64);
+%axis equal;
+%axis([1,GroupSize,1,GroupSize]);
 
-figure;
-imagesc(cPlmkMSEMatrix./max(cPlmkMSEMatrix(:))*64);
-axis equal;
-axis([1,GroupSize,1,GroupSize]);
+%figure;
+%imagesc(cPlmkMSEMatrix./max(cPlmkMSEMatrix(:))*64);
+%axis equal;
+%axis([1,GroupSize,1,GroupSize]);
 
 %%% save results
 save([result_path 'cPDistMatrix.mat'],'cPDistMatrix');
-save([result_path 'cPlmkMSEMatrix.mat'],'cPlmkMSEMatrix');
+%save([result_path 'cPlmkMSEMatrix.mat'],'cPlmkMSEMatrix');
 save([result_path 'cPMapsMatrix.mat'],'cPMapsMatrix');
 
