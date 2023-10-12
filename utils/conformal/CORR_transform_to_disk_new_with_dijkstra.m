@@ -44,8 +44,9 @@ A = triangulation2adjacency(mF);
 
 %for each tind find tes closest decided neighbor and set it with the same
 %sign of temp-1
+progressbar
 for j=1:size(D,1)
-    progressbar(j,size(D,1),40);
+    progressbar(j/size(D,1));
     td = D(j,:);
     [sa, si] = sort(td);
     stemp = P(si);
@@ -57,6 +58,7 @@ for j=1:size(D,1)
         P(tind(j)) = secondbranch(tind(j));
     end
 end
+close all
 
 
 % %further take the center point to the center by disc mobius

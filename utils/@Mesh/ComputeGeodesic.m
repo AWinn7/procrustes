@@ -24,7 +24,7 @@ vlist = [Vind;w];
 plist = [1];
 Dprev = D(Vind);
 
-while true;
+while true
     % current triangle
     i = vlist(1,end);
     j = vlist(2,end);

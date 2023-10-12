@@ -16,8 +16,8 @@ if(dim~=3)
     error('This function only extract bouding box for point cloud in 3d.');
 end
 
-% [frame, ~, ~] = pca(pointCloud);
 [frame, ~, latent] = pca(pointCloud);
+%[frame, ~, latent] = princomp(pointCloud);
 
 mark_position = zeros(dim);
 

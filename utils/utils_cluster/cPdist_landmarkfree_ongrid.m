@@ -15,8 +15,7 @@ options.GaussMinMatch = 'off';
 options.ProgressBar = 'off';
 
 disp(['Comparing ' GM.Aux.name ' vs ' GN.Aux.name '...']);
-msg=which('ComputeContinuousProcrustes');
-disp(msg);
+
 rslt = GM.ComputeContinuousProcrustes(GN,options);
 
 cPrslt{str2double(TAXAind1),str2double(TAXAind2)} = rslt;

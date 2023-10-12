@@ -1,8 +1,8 @@
 function [A,E] = ComputeAdjacencyMatrix(G)
-if ~isempty(G.A)
-    A=G.A;
-end
+% Computes adjacency matrix
 
+
+%% Else go through computations
 V=G.V;
 F=G.F;
 Nv=size(V,2);

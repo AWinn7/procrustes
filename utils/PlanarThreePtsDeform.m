@@ -1,6 +1,5 @@
 function [A,b] = PlanarThreePtsDeform(X,Y)
-%PLANARTHREEPTSDEFORM Summary of this function goes here
-%   Detailed explanation goes here
+%This is used 
 
 if (size(X,1)>size(X,2))
     X = X';

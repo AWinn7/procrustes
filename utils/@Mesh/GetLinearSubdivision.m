@@ -1,4 +1,5 @@
 function K =  GetLinearSubdivision(G)
+% Useful method for increasing flat grid resolution
 % Linear subdivision for triangle meshes
 %
 %  Dimensions:

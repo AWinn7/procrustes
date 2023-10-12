@@ -8,9 +8,11 @@ m=length(tind);
 D = zeros(m,n);
 
 disp('using Dijkstra to determine image of boundary...')
+progressbar
 for k=1:m
-    progressbar(k,m,40);
-    G=graph(A);
-    [~,dists, ~]=shortestpathtree(G,tind(k), 'Method', 'positive');
-    D(k,:) = dists;    
+    
+    [dists, path, pred]=graphshortestpath(A,tind(k), 'Directed', 'False' ,'Method', 'Dijkstra');
+    D(k,:) = dists; 
+    progressbar(k/m);
 end
+close all

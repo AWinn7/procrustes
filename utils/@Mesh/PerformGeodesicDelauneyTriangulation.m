@@ -1,6 +1,6 @@
 function [V,F] = PerformGeodesicDelauneyTriangulation(G, VertSampInd, options)
-%PERFORMGEODESICDELAUNEYTRIANGULATION Summary of this function goes here
-%   Detailed explanation goes here
+%This will attempt to retriangulate a mesh but has not been used in
+%pipeline for a while.
 
 options.method = getoptions(options, 'method', 'slow');
 options.verb = getoptions(options, 'verb', 0);

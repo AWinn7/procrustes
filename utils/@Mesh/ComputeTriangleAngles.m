@@ -1,5 +1,5 @@
 function A = ComputeTriangleAngles(G,EL)
-
+%Computes angles for each triangle, needed for some computations.
 if exist('EL','var')==0
     EL=G.ComputeEdgeLengths;
 end

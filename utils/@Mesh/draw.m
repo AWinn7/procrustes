@@ -1,6 +1,19 @@
 function h = draw(G,varargin)    
 
+
+
 varlist = varargin;
+% 
+
+FaceAlpha=1;
+inputExist = find(cellfun(@(x) strcmpi(x, 'FaceAlpha') , varargin));
+if inputExist
+  FaceAlpha = varargin{inputExist+1};
+end
+
+
+
+
 
 patch_option = find(cellfun(@(x) isstruct(x), varlist));
 if ~isempty(patch_option)
@@ -48,8 +61,20 @@ if size(F{1},1)~=1
     F = cellfun( @(x) x', F, 'UniformOutput', 0);
 end
 
-for i=minmax_face_size(1):minmax_face_size(2)
-    h(i) = patch('Vertices', V', 'Faces', cell2mat(F(face_size==i)),'FaceColor',[0.5,0.5,0.5],'CDataMapping','direct');
+for i=minmax_face_size(1)
+        h(i) = patch('Vertices', V', 'Faces', cell2mat(F(face_size==i)),'FaceColor','interp',...
+        'FaceVertexCData',repmat([.9 .9 .8],size(V,2),1),'CDataMapping','scaled',...
+        'FaceLighting','flat','CDataMapping','direct', ...
+        'EdgeColor','none','FaceAlpha', FaceAlpha,'AmbientStrength',0.2,'SpecularStrength',0.5);
+    hold on
+    colormap jet(256);
+    %material shiny
+    set(gca, 'CameraUpVector',  [-0.2666,-0.9468, 0.1804]);
+        set(gca, 'CameraPosition',  [ 5.4366,-1.4825, 0.2070]);
+        %set(gca, 'CameraTarget',    [ 0.0059, 0.0039,-0.0166]);
+        set(gca, 'CameraViewAngle', 10.0659);
+        camlight('headlight');
+        camlight(180,0);
 end
 
 h = h( h>0 );

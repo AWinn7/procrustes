@@ -1,5 +1,5 @@
 function Ic = Adjacency2Incidence(G,A)
-
+%Possibly deprecated
 if nargin<2
     A = G.A;
 end

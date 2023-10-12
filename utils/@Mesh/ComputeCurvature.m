@@ -122,7 +122,7 @@ end
 U = zeros(3,3,n);
 D = zeros(3,n);
 for k=1:n
-    progressbar(k,n);
+    %progressbar(k,n);
     [u,d] = eig(Tv(:,:,k));
     d = real(diag(d));
     % sort acording to [norma,min curv, max curv]

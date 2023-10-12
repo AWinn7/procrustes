@@ -8,11 +8,11 @@ function [BV,BE] = FindBoundaries(G)
 %     BV=G.BV;
 %     return;
 % end
-if isempty(G.E)
+%if isempty(G.E)
     [~,E]=G.ComputeAdjacencyMatrix;
-else
-    E=G.E;
-end
+%else
+    G.E = E;
+%end
 Nv = size(G.V,2);
 [I,J] = find(E);
 BV = sparse(Nv,1);

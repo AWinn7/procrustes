@@ -13,8 +13,9 @@ if(~isempty(seed_inds) )
 end
 
 sprd = zeros(n,1);
+progressbar
 for k=1:n
-    progressbar(k,n,40);
+    progressbar(k/n);
     [~, tind] = max(dist);
     sprd(k) = tind(1);
     dist_from_k = sum((X - ones(N,1)*X(sprd(k),:)).^2,2);

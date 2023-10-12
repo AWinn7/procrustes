@@ -12,7 +12,7 @@ face = G.F;
 vertex = G.V;
 
 options.null = 0;
-naver = getoptions(options, 'niter_averaging', 1);
+naver = getoptions(options, 'niter_averaging', 3);
 % naver = 1;%getoptions(options, 'niter_averaging', 1);
 type = 'combinatorial';%getoptions(options, 'averaging_type', 'combinatorial');
 

@@ -1,35 +1,33 @@
-function oBV = FindOrientedBoundaries(G)
+function [BL,BI] = FindOrientedBoundaries(G)
+%Computes the list of boundaries in order
+%BL lists the boundaries in order
+%BI lists the next boundary in the chain
 
 [BV,BE] = G.FindBoundaries;
-
-oBV = zeros(size(BV));
-BE(BE(:,1)==0,:) = [];
-remaining = BV;
-first_vertex = BV(1);
-oBV(1) = first_vertex;
-remaining(remaining == first_vertex) = [];
-for j=2:length(oBV)
-    cands = find(BE(:)==first_vertex);
-    candRows = zeros(size(cands));
-    candCols = zeros(size(cands));
-    for k=1:length(cands)
-        if (cands(k)>length(BV))
-            candRows(k) = cands(k)-length(BV);
-            candCols(k) = 2;
-        else
-            candRows(k) = cands(k);
-            candCols(k) = 1;
-        end
+nv = size(BV);
+BL = [];
+BI = [];
+bn = 1;
+while nnz(BV) > 0
+    vind = find(BV,1);
+    v=BV(vind);
+    BL(bn,:)=0;
+    BE(v,2)=0;
+    i=1;
+    while v ~= 0
+        BL(bn,i) = v;
+        i=i+1;
+        vind=find(BV==v);
+        BV(vind)=0;
+        BE(BE==v)=0;
+        v=BE(v,BE(v,:)~=0);
     end
-    for k=1:length(cands)
-        second_vertex = sum(BE(candRows(k),:))-first_vertex;
-        if find(remaining == second_vertex)
-            break;
-        end
-    end
-    oBV(j) = second_vertex;
-    remaining(remaining == second_vertex) = [];
-    first_vertex = second_vertex;
+    bn=bn+1;
 end
 
+for i=1:bn-1
+    BLi=BL(i,:);
+    ind=find(BLi);
+    BI{i}=zeros(size(ind));
+    BI{i}(BLi(ind)) = ind;
 end

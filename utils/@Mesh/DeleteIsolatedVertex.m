@@ -1,6 +1,7 @@
 function dVInds = DeleteIsolatedVertex(G,options)
-%DELETEISOLATEDVERTEX Summary of this function goes here
-%   Detailed explanation goes here
+% This deletes vertices that belong to at most one face, though not the
+% faces. This was used primarily for handling topological discs and is
+% present in some mapping code but is not actively used.
 
 if nargin<2
     options = [];
