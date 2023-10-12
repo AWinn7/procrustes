@@ -40,6 +40,8 @@ switch FeatureType
         FeaturesN = GN.Aux.ConfMaxInds;
 end
 
+save('debug_compute_cont_proc.mat');
+
 FeaturesMCoords = compl(GM.Aux.UniformizationV(:,FeaturesM));
 FeaturesNCoords = compl(GN.Aux.UniformizationV(:,FeaturesN));
 

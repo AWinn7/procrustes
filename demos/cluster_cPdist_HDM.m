@@ -6,7 +6,8 @@ close all;
 path(pathdef);
 wd = '/home/ugrad/acw23/projects/tac/procrustes/demos';
 
-utils_path = [wd '/../utils/'];
+%utils_path = [wd '/../utils/'];
+utils_path = '/home/ugrad/acw23/projects/tac/utils/';
 disp(utils_path);
 addpath(path,genpath(utils_path));
 
@@ -18,13 +19,16 @@ base_path = [wd '/'];
 
 data_path = [base_path '../../data/'];
 
-rslts_path = [data_path 'results/subsample_results/rslts/'];
+%rslts_path = [data_path 'results/subsample_results/rslts/'];
+rslts_path = [data_path 'results/tmp_results/'];
 
 cluster_path = [base_path 'cluster/'];
 
-samples_path = [data_path 'results/subsample_results/subsample_cF_HDM_results/'];
+samples_path = [data_path 'results/subsample_results/NEW_subsample_cF_HDM_results/'];
+%samples_path = [data_path 'results/fullsample_results/clusterFlattenHDM_results/'];
 
 meshes_path = [data_path 'samples/nakwai_50/subsample_nakwai_50/nakwai_50_subsample_offs/ss_mesh_2_offs/'];
+%meshes_path = [data_path 'samples/nakwai_50/fullsample_nakwai_50/nakwai_50_offs_all/']; 
 
 scripts_path = [cluster_path 'scripts/'];
 
