@@ -73,8 +73,11 @@ while 1 > 0
         if map_21(map_12(j)) == j
             curLmk12 = lmk12(j);
             curLmk21 = lmk21(map_12(j));
-            [dist12,~,~] = graphshortestpath(GN.A,GP_N(curLmk12),GP_N(featureProj2(map_12(j))));
-            [dist21,~,~] = graphshortestpath(GM.A,GP_M(curLmk21),GP_M(featureProj1(j)));
+            GN_A = digraph(GN.A);
+            GM_A = digraph(GM.A);
+
+            [~,dist12] = shortestpath(GN_A,GP_N(curLmk12),GP_N(featureProj2(map_12(j))));
+            [~,dist21] = shortestpath(GM_A,GP_M(curLmk21),GP_M(featureProj1(j)));
             if dist12 < MaxDistTol && dist21 < MaxDistTol
                 TPS_FEATURESM_INDS = [TPS_FEATURESM_INDS FeaturesM(j)];
                 TPS_FEATURESN_INDS = [TPS_FEATURESN_INDS FeaturesN(map_12(j))];
