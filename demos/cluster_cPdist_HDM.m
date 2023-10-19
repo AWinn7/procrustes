@@ -6,8 +6,8 @@ close all;
 path(pathdef);
 wd = '/home/ugrad/acw23/projects/tac/procrustes/demos';
 
-%utils_path = [wd '/../utils/'];
-utils_path = '/home/ugrad/acw23/projects/tac/utils/';
+utils_path = [wd '/../utils/'];
+%utils_path = '/home/ugrad/acw23/projects/tac/utils/';
 disp(utils_path);
 addpath(path,genpath(utils_path));
 
