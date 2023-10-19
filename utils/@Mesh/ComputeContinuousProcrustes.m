@@ -67,6 +67,9 @@ featureProj1 = knnsearch(GM.V(:,GM.Aux.GPLmkInds)',GM.V(:,FeaturesM)');
 featureProj2 = knnsearch(GN.V(:,GN.Aux.GPLmkInds)',GN.V(:,FeaturesN)');
 lmk12 = proc12(featureProj1);
 lmk21 = proc21(featureProj2);
+
+% counter to force exiting if we're stuck in an infinite loop
+counter = 0;
 while 1 > 0
     TPS_FEATURESM_INDS = []; TPS_FEATURESN_INDS = [];
     for j = 1:length(map_12)
@@ -88,6 +91,11 @@ while 1 > 0
         disp(['Error: Not enough allowable correspondences. Expanding radius to '...
             num2str(MaxDistTol+1);]);
         MaxDistTol = MaxDistTol+1;
+	counter = counter + 1;
+	if counter == 35
+		return
+	end
+
     else
         break;
     end
