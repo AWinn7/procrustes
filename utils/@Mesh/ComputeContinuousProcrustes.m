@@ -20,14 +20,14 @@ function [rslt] = ComputeContinuousProcrustes(GM,GN,options)
 
 
 if nargin<3
-    options.FeatureType = 'ConfMax';
+    options.FeatureType = 'GP';
     options.NumGPLmks = 250;    %Should be big enough to make sure all features captured plus some cover of interior
     options.MaxDistTol = 8;    %This will be replaced with weighted adjacency in future
     options.NumDensityPnts = 100;
 end
 
 %%% feature type for matching
-FeatureType = getoptions(options,'FeatureType','ConfMax');
+FeatureType = getoptions(options,'FeatureType','GP');
 NumGPLmks = getoptions(options,'NumDensityPnts',250);
 MaxDistTol = getoptions(options,'MaxDistTol',7);
 switch FeatureType
@@ -43,12 +43,15 @@ switch FeatureType
     case 'Landmarks'
         FeaturesM = GM.Aux.Landmarks;
         FeaturesN = GN.Aux.Landmarks;
+    case 'GP'
+        FeaturesM = GM.GetGPLmk(5);
+        FeaturesN = GN.GetGPLmk(5)
 end
 
 if length(FeaturesM) < 3 || length(FeaturesN) < 3
     disp('WARNING: Not enough features for matching. Computing candidate GP features');
-    FeaturesM = GM.GetGPLmk(10);
-    FeaturesN = GN.GetGPLmk(10);
+    FeaturesM = GM.GetGPLmk(5);
+    FeaturesN = GN.GetGPLmk(5);
 end
 map_12 = knnsearch(GN.V(:,FeaturesN)',GM.V(:,FeaturesM)');
 map_21 = knnsearch(GM.V(:,FeaturesM)',GN.V(:,FeaturesN)');
