@@ -6,7 +6,8 @@ close all;
 path(pathdef);
 wd = '/home/ugrad/acw23/projects/tac/procrustes/demos';
 
-utils_path = [wd '/../utils/'];
+%utils_path = [wd '/../utils/'];
+utils_path = '/home/ugrad/acw23/projects/tac/utils/';
 disp(utils_path);
 addpath(path,genpath(utils_path));
 
@@ -15,13 +16,24 @@ addpath(path,genpath([wd '/../utils/utils_cluster/']));
 
 %%% setup paths
 base_path = [wd '/'];
+
 data_path = [base_path '../../data/'];
-rslts_path = [data_path 'results/rslts/'];
+
+%rslts_path = [data_path 'results/subsample_results/rslts/'];
+rslts_path = [data_path 'results/tmp_results/'];
+
 cluster_path = [base_path 'cluster/'];
-samples_path = [data_path 'results/clusterFlattenHDM_results/'];
-meshes_path = [data_path 'samples/nakwai_50/nakwai_50_offs_all/'];
+
+samples_path = [data_path 'results/subsample_results/NEW_subsample_cF_HDM_results/'];
+%samples_path = [data_path 'results/fullsample_results/clusterFlattenHDM_results/'];
+
+meshes_path = [data_path 'samples/nakwai_50/subsample_nakwai_50/nakwai_50_subsample_offs/ss_mesh_2_offs/'];
+%meshes_path = [data_path 'samples/nakwai_50/fullsample_nakwai_50/nakwai_50_offs_all/']; 
+
 scripts_path = [cluster_path 'scripts/'];
+
 errors_path = [cluster_path 'errors/'];
+
 outputs_path = [cluster_path 'outputs/'];
 
 %%% build folders if they don't exist
@@ -37,7 +49,7 @@ outputs_path = [cluster_path 'outputs/'];
 %command_text = ['!rm -f ' rslts_path '*']; eval(command_text); disp(command_text);
 
 %%% load taxa codes
-taxaFile=[data_path 'workspaces/HDM_Workspace.mat'];
+taxaFile=[data_path 'utility/workspaces/HDM_Workspace.mat'];
 load(taxaFile, 'taxa_code');
 GroupSize = length(taxa_code);
 chunk_size = 25; %% Clement
@@ -122,5 +134,6 @@ system(script_name);
 
 %tosub = ['!qsub -N ' jobname ' -o ' sout ' -e ' serr ' ' script_name ];
 %eval(tosub);
+
 
 
