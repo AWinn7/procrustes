@@ -45,7 +45,7 @@ switch FeatureType
         FeaturesN = GN.Aux.Landmarks;
     case 'GP'
         FeaturesM = GM.GetGPLmk(5);
-        FeaturesN = GN.GetGPLmk(5)
+        FeaturesN = GN.GetGPLmk(5);
 end
 
 if length(FeaturesM) < 3 || length(FeaturesN) < 3
