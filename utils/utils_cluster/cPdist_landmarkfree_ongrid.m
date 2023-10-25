@@ -7,7 +7,7 @@ GN = GN.G;
 
 load(rslt_mat);
 
-options.FeatureType = 'ConfMax';
+options.FeatureType = 'GP';
 options.NumDensityPnts = 100;
 options.AngleIncrement = 0.01;
 options.NumFeatureMatch = 4;
@@ -24,4 +24,5 @@ save(rslt_mat,'cPrslt');
 disp(['cPdist(' GM.Aux.name ', ' GN.Aux.name ') = ' num2str(rslt.cPdist) '.']);
 
 end
+
 
